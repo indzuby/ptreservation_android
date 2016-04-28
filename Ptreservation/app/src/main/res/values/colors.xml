@@ -5,4 +5,5 @@
     <color name="white">#fff</color>
     <color name="translate">#00000000</color>
     <color name="gray">#eee</color>
+    <color name="red">#e00</color>
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/green"
+    android:layout_height="48dp">
+    <ImageView
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:src="@drawable/oval"
+        android:layout_height="match_parent" />
+    <TextView
+        android:layout_toRightOf="@+id/back"
+        android:gravity="center_vertical"
+        android:textSize="16dp"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:text="4월"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="60dp"
+        android:src="@drawable/oval"
+        android:layout_height="match_parent" />
+</RelativeLayout>
