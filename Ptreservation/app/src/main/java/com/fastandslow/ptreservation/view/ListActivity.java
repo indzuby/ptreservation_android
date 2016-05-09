@@ -22,9 +22,7 @@ public class ListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ListView listView = (ListView)findViewById(R.id.today_schedule);
-
-
+        ListView listView = (ListView) findViewById(R.id.today_schedule);
 
     }
 }

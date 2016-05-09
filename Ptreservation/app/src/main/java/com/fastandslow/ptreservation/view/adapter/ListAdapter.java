@@ -1,4 +1,4 @@
-package com.fastandslow.ptreservation.adapter;
+package com.fastandslow.ptreservation.view.adapter;
 
 import android.content.Context;
 

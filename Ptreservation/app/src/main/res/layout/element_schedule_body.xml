@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/element_today_schedule_item"/>
-    <include layout="@layout/element_today_schedule_item"/>
-    <include layout="@layout/element_today_schedule_item"/>
-    <include layout="@layout/element_today_schedule_item"/>
-    <include layout="@layout/element_today_schedule_item"/>
-    <include layout="@layout/element_today_schedule_item"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/day_of_month"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:textSize="48dp" />
+
+        <TextView
+            android:id="@+id/day_of_week"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:text="목" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/today_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|center_vertical"
+        android:divider="@null"
+        android:orientation="horizontal">
+
+    </ListView>
 </LinearLayout>

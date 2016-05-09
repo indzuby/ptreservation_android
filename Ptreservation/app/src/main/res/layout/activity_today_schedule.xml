@@ -5,65 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <ListView
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_gravity="right|center_vertical"
-        android:divider="@null"
-        android:id="@+id/today_schedule">
+        android:id="@+id/schedule_viewpager"
+        android:layout_height="match_parent">
 
-    </ListView>
-
-    <LinearLayout
-        android:id="@+id/date_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="8dp"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-
-            android:textSize="48dp"
-            android:id="@+id/day_of_month"/>
-
-        <TextView
-            android:layout_width="16dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:text="목"
-            android:id="@+id/day_of_week"/>
-
-    </LinearLayout>
+    </android.support.v4.view.ViewPager>
     <ImageButton
         android:id="@+id/plus_button"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="bottom|end"
-        android:elevation="4dp"
-        android:background="@drawable/fab_oval"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/fab_oval"
+        android:elevation="4dp"
         android:src="@mipmap/fab_plus_open" />
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--fab:rippleColor="@android:color/white"-->
-
 
 
 </FrameLayout>

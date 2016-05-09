@@ -8,14 +8,16 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <EditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:paddingLeft="16dp"
-        android:hint="아이디"
+        android:hint="이메일"
         android:inputType="textEmailAddress"
         android:background="@drawable/border_input"
         android:layout_height="48dp" />
 
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:paddingLeft="16dp"
         android:hint="비밀번호"
@@ -31,12 +33,13 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:checked="true"
-
+            android:id="@+id/auto_login"
             android:text="자동 로그인"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
     <Button
+        android:id="@+id/login_button"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:background="@color/green"
