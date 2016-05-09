@@ -97,10 +97,6 @@ public class ScheduleListAdapter extends BaseAdapter {
                 params.setMargins(0, marginTop, ContextUtils.pxFromDp(mContext, 16), 0);
                 timeIndicator.setLayoutParams(params);
             }
-
-        //firstPt.setText(mList.get(position).getFirstSchedule());
         return v;
     }
-
-
 }
