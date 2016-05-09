@@ -87,5 +87,4 @@ public class LoginActivity extends BaseActivity {
         findViewById(R.id.login_button).setOnClickListener(this);
         autoLogin = (CheckBox) findViewById(R.id.auto_login);
     }
-
 }

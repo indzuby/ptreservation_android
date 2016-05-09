@@ -2,43 +2,90 @@ package com.fastandslow.ptreservation.view;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ListView;
+import android.support.v7.app.ActionBar;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 
 import com.fastandslow.ptreservation.R;
-import com.fastandslow.ptreservation.view.adapter.ListAdapter;
-import com.fastandslow.ptreservation.domain.TodaySchedule;
+import com.fastandslow.ptreservation.utils.ContextUtils;
+import com.fastandslow.ptreservation.utils.DateUtils;
 import com.fastandslow.ptreservation.view.adapter.SchedulePagerAdapter;
 import com.fastandslow.ptreservation.view.common.BaseActivity;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
+import org.w3c.dom.Text;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
 
     ViewPager mSchedulePager;
-
     SchedulePagerAdapter pagerAdapter;
+    TextView mActionBarTitle ;
+    int currentItem = - 1;
+    List<DateTime> mDateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_schedule);
 
+        initActionBar();
         init();
     }
 
-    public  void init(){
+    public void initActionBar(){
+        ActionBar actionBar = getSupportActionBar();
+        View v = ContextUtils.getActionBar(this, actionBar, R.layout.actionbar_schedule);
+        mActionBarTitle = (TextView) v.findViewById(R.id.title);
+
+    }
+
+    public void init() {
+
+        mDateList = DateUtils.getTenDateList();
+
+
         mSchedulePager = (ViewPager) findViewById(R.id.schedule_viewpager);
-        pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList);
+
+
+        mSchedulePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                if(currentItem !=-1) {
+                    if (position < currentItem) {
+                        mDateList.add(0, DateUtils.getBeforeDate(mDateList.get(0)));
+                        mDateList.remove(mDateList.size() - 1);
+                    } else {
+                        mDateList.add(DateUtils.getAfterDate(mDateList.get(mDateList.size() - 1)));
+                        mDateList.remove(0);
+                    }
+                    currentItem = -1;
+                    pagerAdapter.notifyDataSetChanged();
+                    mSchedulePager.setCurrentItem(5);
+                }else {
+                    mActionBarTitle.setText(mDateList.get(position).getMonthOfYear()+"월");
+                    currentItem = position;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mSchedulePager.setAdapter(pagerAdapter);
+        mSchedulePager.setCurrentItem(5);
     }
 }
