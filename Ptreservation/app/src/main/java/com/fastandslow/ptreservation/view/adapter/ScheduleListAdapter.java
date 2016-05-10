@@ -88,11 +88,11 @@ public class ScheduleListAdapter extends BaseAdapter {
                 int marginTop;
                 if (nowTime.getMinuteOfHour() >= 30) {
                     float percent = (nowTime.getMinuteOfHour() - 30) / 30f;
-                    marginTop = Math.round(ContextUtils.pxFromDp(mContext, 20) * percent);
+                    marginTop = Math.round(ContextUtils.pxFromDp(mContext, 32) * percent);
                 } else {
                     float percent = nowTime.getMinuteOfHour() / 30f;
                     percent += 1;
-                    marginTop = Math.round(ContextUtils.pxFromDp(mContext, 20) * percent);
+                    marginTop = Math.round(ContextUtils.pxFromDp(mContext, 32) * percent);
                 }
                 params.setMargins(0, marginTop, ContextUtils.pxFromDp(mContext, 16), 0);
                 timeIndicator.setLayoutParams(params);

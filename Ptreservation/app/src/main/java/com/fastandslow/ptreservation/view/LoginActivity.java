@@ -75,14 +75,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void init() {
-        isAutoLogin = SessionUtils.getBoolean(this, CodeDefinition.AUTO_LOGIN, false);
-        if (isAutoLogin) {
-            login(SessionUtils.getString(this, CodeDefinition.EMAIL, "asdf@asdf.com"),
-                    SessionUtils.getString(this, CodeDefinition.PASSWORD, "password"));
-        }
-
         mEmailEditText = (EditText) findViewById(R.id.email);
         mPasswordEditText = (EditText) findViewById(R.id.password);
+
+        isAutoLogin = SessionUtils.getBoolean(this, CodeDefinition.AUTO_LOGIN, false);
+        if (isAutoLogin) {
+            String email = SessionUtils.getString(this, CodeDefinition.EMAIL, "asdf@asdf.com");
+            String password = SessionUtils.getString(this, CodeDefinition.PASSWORD, "password");
+            mEmailEditText.setText(email);
+            mPasswordEditText.setText(password);
+            login(email,password);
+        }
+
 
         findViewById(R.id.login_button).setOnClickListener(this);
         autoLogin = (CheckBox) findViewById(R.id.auto_login);

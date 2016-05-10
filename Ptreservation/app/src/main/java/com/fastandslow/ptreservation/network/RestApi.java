@@ -22,7 +22,7 @@ public class RestApi {
 
 
 //    final static String url = "http://localhost:8000/";
-    final static String url = "http://192.168.0.4:3000/";
+    final static String url = "http://192.168.0.16:3000/";
 
     Context mContext;
     private static RestApi instance ;
