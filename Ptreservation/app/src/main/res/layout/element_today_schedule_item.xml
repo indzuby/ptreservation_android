@@ -26,11 +26,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-<<<<<<< HEAD
+
                 android:layout_height="36dp"
-=======
-                android:layout_height="wrap_content"
->>>>>>> 85f882c8331600939be301b118d444499aea242c
+
                 android:orientation="vertical">
 
                 <TextView
@@ -47,11 +45,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-<<<<<<< HEAD
+
                 android:layout_height="36dp"
-=======
-                android:layout_height="wrap_content"
->>>>>>> 85f882c8331600939be301b118d444499aea242c
+
                 android:orientation="vertical">
 
                 <TextView

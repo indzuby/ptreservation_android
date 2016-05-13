@@ -1,10 +1,13 @@
 package com.fastandslow.ptreservation.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -31,10 +34,18 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_today_schedule);
+        setContentView(R.layout.activity_today_schedule);   
+        ImageButton btn  =(ImageButton) findViewById(R.id.plus_button);
 
         initActionBar();
         init();
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void initActionBar(){
@@ -43,6 +54,7 @@ public class MainActivity extends BaseActivity {
         mActionBarTitle = (TextView) v.findViewById(R.id.title);
 
     }
+
 
     public void init() {
 

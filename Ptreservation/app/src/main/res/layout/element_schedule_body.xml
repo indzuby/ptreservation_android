@@ -55,9 +55,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:id="@+id/add_today_schedule"
                 android:text="일정 없음. 추가하려면 탭하세요."
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:clickable="true"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
