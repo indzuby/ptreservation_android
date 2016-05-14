@@ -27,12 +27,15 @@ public class DateUtils {
         return list;
     }
 
-    public static List<DateTime> getTenDateList(){
+    public static List<DateTime> getTenDateList(DateTime now){
         List<DateTime> dateList = new ArrayList<>();
-        DateTime now = new DateTime();
         for(int i = -5;i<=4;i++)
             dateList.add(now.plusDays(i));
         return dateList;
+    }
+
+    public static List<DateTime> getTenDateList(){
+        return getTenDateList(new DateTime());
     }
 
     public static boolean isSameDate(DateTime a,DateTime b) {

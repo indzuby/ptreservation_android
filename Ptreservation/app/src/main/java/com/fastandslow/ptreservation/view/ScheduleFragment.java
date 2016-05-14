@@ -28,7 +28,6 @@ import java.util.List;
 public class ScheduleFragment extends BaseFragment{
 
     private ScheduleListAdapter mAdapter;
-
     private ListView mList;
 
     List<TodaySchedule> time;
@@ -37,7 +36,12 @@ public class ScheduleFragment extends BaseFragment{
 
     @Override
     public void onClick(View v) {
-
+        if(v.getId() == R.id.add_schedule) {
+            Intent intent = new Intent(getActivity(),NewScheduleActivity.class);
+            DateTime curr = mDateTime;
+            intent.putExtra("DATE_TIME",curr.toString("yyyy-MM-dd"));
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -48,6 +52,9 @@ public class ScheduleFragment extends BaseFragment{
         return mView;
     }
     public void init(){
+
+        View addSchedule = mView.findViewById(R.id.add_schedule);
+        addSchedule.setOnClickListener(this);
 
         String dateTimeString = getArguments().getString("DATE_TIME");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");

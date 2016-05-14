@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-
     <ListView
         android:listSelector="@color/translate"
         android:id="@+id/today_schedule"
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
@@ -21,9 +20,9 @@
     </ListView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/white_gradient">
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:background="@drawable/white_gradient"
             android:id="@+id/date_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,6 +49,8 @@
                 android:text="목" />
         </LinearLayout>
         <LinearLayout
+            android:background="@drawable/white_gradient"
+            android:id="@+id/add_schedule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="8dp">
@@ -58,8 +59,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/add_today_schedule"
                 android:text="일정 없음. 추가하려면 탭하세요."
-                android:layout_gravity="center_vertical"
-                android:clickable="true"/>
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
     </LinearLayout>
 

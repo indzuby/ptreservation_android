@@ -52,7 +52,12 @@ public class LoginActivity extends BaseActivity {
                 new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.code() == 200) {
+                        if (response.code() == 200 || response.code() == 201) {
+                            if(response.code()==200)
+                                SessionUtils.putString(getBaseContext(),CodeDefinition.USER_STATE,CodeDefinition.TRAINER);
+                            else
+                                SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.CUSTOMER);
+
                             startMainActivity();
 
                         } else {
