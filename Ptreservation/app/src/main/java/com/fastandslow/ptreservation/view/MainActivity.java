@@ -72,6 +72,9 @@ public class MainActivity extends BaseActivity {
             dpd.show(getFragmentManager(), "Datepickerdialog");
         } else if (v.getId() == R.id.plus_button) {
             Intent intent = new Intent(MainActivity.this, NewScheduleActivity.class);
+
+            DateTime curr = mDateList.get(5);
+            intent.putExtra("DATE_TIME",curr.toString("yyyy-MM-dd"));
             startActivity(intent);
 
         }else if(v.getId() == R.id.today ){

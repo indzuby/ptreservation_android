@@ -38,6 +38,8 @@ public class ScheduleFragment extends BaseFragment{
     public void onClick(View v) {
         if(v.getId() == R.id.add_schedule) {
             Intent intent = new Intent(getActivity(),NewScheduleActivity.class);
+            DateTime curr = mDateTime;
+            intent.putExtra("DATE_TIME",curr.toString("yyyy-MM-dd"));
             startActivity(intent);
         }
     }
