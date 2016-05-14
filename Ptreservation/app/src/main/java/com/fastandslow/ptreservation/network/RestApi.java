@@ -4,9 +4,14 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.fastandslow.ptreservation.domain.Customer;
 import com.fastandslow.ptreservation.domain.Reservation;
+import com.fastandslow.ptreservation.service.CustomerService;
 import com.fastandslow.ptreservation.service.LoginService;
 import com.fastandslow.ptreservation.service.ReservationService;
+import com.fastandslow.ptreservation.service.TrainerService;
+import com.fastandslow.ptreservation.utils.CodeDefinition;
+import com.fastandslow.ptreservation.utils.SessionUtils;
 
 import org.joda.time.DateTime;
 
@@ -39,6 +44,10 @@ public class RestApi {
 
     ReservationService reservationService;
 
+    TrainerService trainerService;
+
+    CustomerService customerService;
+
     public RestApi(Context mContext) {
         this.mContext = mContext;
         retrofit = new Retrofit.Builder()
@@ -63,6 +72,19 @@ public class RestApi {
         if(reservationService==null)
             reservationService = retrofit.create(ReservationService.class);
     }
+
+
+    private void initTrainerService(){
+        if(trainerService==null)
+            trainerService = retrofit.create(TrainerService.class);
+    }
+
+
+    private void initCustomerService(){
+        if(customerService==null)
+            customerService = retrofit.create(CustomerService.class);
+    }
+
     public void login(String email, String password,Callback<Void> callback){
         initLoginService();
         Call<Void> logins = loginService.login(email, password);
@@ -75,14 +97,18 @@ public class RestApi {
         reservations.enqueue(callback);
     }
 
-    public void getReservationListByDate(DateTime date,Callback<List<Reservation>> callback,Reservation.Type type) {
-        initReservationService();
-        Call<List<Reservation>> reservations = null;
-        if(type == Reservation.Type.CUSTOMER)
-            reservations = reservationService.getCustomerListByDate(date.toString("yyyy-MM-dd"));
-        else if(type == Reservation.Type.TRAINER)
-            reservations = reservationService.getTrainerListByDate(date.toString("yyyy-MM-dd"));
-        reservations.enqueue(callback);
+    public void getListByDateCustomer(DateTime date,Callback<List<Reservation>> callback) {
+        String state = SessionUtils.getString(mContext, CodeDefinition.USER_STATE,CodeDefinition.CUSTOMER);
+        if(state.equals(CodeDefinition.CUSTOMER)) {
+            initCustomerService();
+            Call<List<Reservation>> reservations = customerService.getListByDate(date.toString("yyyy-MM-dd"));
+            reservations.enqueue(callback);
+        }else {
+            initTrainerService();
+            Call<List<Reservation>> reservations = trainerService.getListByDate(date.toString("yyyy-MM-dd"));
+            reservations.enqueue(callback);
+        }
     }
+
 
 }

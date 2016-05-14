@@ -1,5 +1,6 @@
 package com.fastandslow.ptreservation.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -27,7 +28,6 @@ import java.util.List;
 public class ScheduleFragment extends BaseFragment{
 
     private ScheduleListAdapter mAdapter;
-
     private ListView mList;
 
     List<TodaySchedule> time;
@@ -36,7 +36,10 @@ public class ScheduleFragment extends BaseFragment{
 
     @Override
     public void onClick(View v) {
-
+        if(v.getId() == R.id.add_schedule) {
+            Intent intent = new Intent(getActivity(),NewScheduleActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -47,6 +50,9 @@ public class ScheduleFragment extends BaseFragment{
         return mView;
     }
     public void init(){
+
+        View addSchedule = mView.findViewById(R.id.add_schedule);
+        addSchedule.setOnClickListener(this);
 
         String dateTimeString = getArguments().getString("DATE_TIME");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");

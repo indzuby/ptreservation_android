@@ -11,7 +11,7 @@
         android:paddingRight="16dp">
 
         <TextView
-            android:id="@+id/trainer_id"
+            android:id="@+id/trainer_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -48,7 +48,7 @@
                     android:src="@mipmap/ic_event_black_24dp" />
 
                 <TextView
-                    android:id="@+id/start_date"
+                    android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="16dp"
@@ -118,6 +118,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/alarm_view"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:gravity="center_vertical"
@@ -126,6 +127,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:visibility="invisible"
                         android:gravity="center_vertical"
                         android:text=" + 다른 알림 추가" />
                 </LinearLayout>
@@ -181,6 +183,7 @@
             android:src="@mipmap/ic_note_add_black_24dp" />
 
         <EditText
+            android:id="@+id/memo"
             android:editable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
