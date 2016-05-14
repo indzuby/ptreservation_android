@@ -34,8 +34,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_today_schedule);   
+        setContentView(R.layout.activity_today_schedule);
         ImageButton btn  =(ImageButton) findViewById(R.id.plus_button);
+        TextView textview = (TextView)findViewById(R.id.add_today_schedule);
 
         initActionBar();
         init();
@@ -46,6 +47,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     public void initActionBar(){

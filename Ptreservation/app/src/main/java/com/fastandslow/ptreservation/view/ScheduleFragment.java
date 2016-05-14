@@ -1,5 +1,6 @@
 package com.fastandslow.ptreservation.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -54,9 +55,11 @@ public class ScheduleFragment extends BaseFragment{
 
         TextView dayOfMonth = (TextView)mView. findViewById(R.id.day_of_month);
         TextView dayOfWeek = (TextView) mView.findViewById(R.id.day_of_week);
+        TextView addSchedule = (TextView)mView.findViewById(R.id.add_today_schedule);
 
         dayOfMonth.setText(mDateTime.getDayOfMonth()+"");
         dayOfWeek.setText(DateUtils.weekOfDate[mDateTime.getDayOfWeek()-1]);
+        addSchedule.setText("일정 없음. 추가하려면 탭하세요.");
 
         time = DateUtils.getTodayList();
 
