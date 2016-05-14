@@ -32,55 +32,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/clock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_event_black_24dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/allday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="16dp"
-                        android:gravity="center_vertical"
-                        android:text="종일" />
-
-                    <Switch
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center_vertical" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginLeft="64dp"
                 android:layout_marginRight="16dp"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/clock"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_event_black_24dp" />
+
                 <TextView
+                    android:layout_marginLeft="64dp"
                     android:id="@+id/start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
