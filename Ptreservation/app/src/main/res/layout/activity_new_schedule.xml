@@ -37,47 +37,45 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_marginRight="16dp"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/clock"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
                     android:src="@mipmap/ic_event_black_24dp" />
 
                 <TextView
-                    android:layout_marginLeft="64dp"
                     android:id="@+id/start_date"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@+id/clock"
                     android:gravity="center_vertical"
+                    android:paddingRight="16dp"
                     android:text="5월 10일" />
+
                 <TextView
                     android:id="@+id/start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     android:text="오후 6:00" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_marginLeft="64dp"
-                android:layout_marginRight="16dp"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/end_time"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-
                     android:layout_alignParentRight="true"
+                    android:layout_below="@+id/start_time"
                     android:gravity="center_vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     android:text="오후 7:00" />
             </RelativeLayout>
 
@@ -98,43 +96,43 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:src="@mipmap/ic_alarm_black_24dp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
-                    android:gravity="center_vertical"
-                    android:text="10분 전" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:text="10분 전" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:text=" + 다른 알림 추가" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="64dp"
-                android:gravity="center_vertical"
-                android:text=" + 다른 알림 추가" />
 
         </LinearLayout>
 
@@ -174,8 +172,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="16dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -184,12 +181,14 @@
             android:src="@mipmap/ic_note_add_black_24dp" />
 
         <EditText
+            android:editable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
             android:hint="메모하기"
             android:minHeight="40dp"
-            android:paddingLeft="16dp"
+            android:layout_marginLeft="16dp"
+            android:paddingRight="16dp"
             android:textSize="16dp" />
 
     </LinearLayout>
