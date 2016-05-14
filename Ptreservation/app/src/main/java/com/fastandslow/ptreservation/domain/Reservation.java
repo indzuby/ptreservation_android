@@ -11,11 +11,19 @@ import lombok.Data;
 public class Reservation {
 
     int trainer_id;
-
+    int customer_id;
     Date start_datetime;
     Date end_datetime;
 
     boolean is_delete;
 
     String memo;
+
+
+    public static enum Type {
+        TRAINER,CUSTOMER
+    }
+
+    Type type;
+
 }

@@ -18,14 +18,25 @@ import retrofit2.http.Path;
  */
 public interface ReservationService {
 
-    @GET("reservations/date/{date}")
-    Call<List<Reservation>> getListByDate(@Path("date") String date);
+    @GET("reservations/customer/date/{date}")
+    Call<List<Reservation>> getCustomerListByDate(@Path("date") String date);
 
-    @GET("reservations/week/{date}")
-    Call<List<Reservation>> getListByWeek(@Path("date") String date);
+    @GET("reservations/customer/week/{date}")
+    Call<List<Reservation>> getCustomerListByWeek(@Path("date") String date);
 
-    @GET("reservations/month/{year}/{month}")
-    Call<List<Reservation>> getListByMonth(@Path("year") String year,@Path("month") String month);
+    @GET("reservations/customer/month/{year}/{month}")
+    Call<List<Reservation>> getCustomerListByMonth(@Path("year") String year,@Path("month") String month);
+
+
+    @GET("reservations/trainer/date/{date}")
+    Call<List<Reservation>> getTrainerListByDate(@Path("date") String date);
+
+    @GET("reservations/trainer/week/{date}")
+    Call<List<Reservation>> getTrainerListByWeek(@Path("date") String date);
+
+    @GET("reservations/trainer/month/{year}/{month}")
+    Call<List<Reservation>> getTrainerListByMonth(@Path("year") String year,@Path("month") String month);
+
 
     @POST("reservations/add")
     Call<Void> addReservations(@Body Reservation reservation);
