@@ -14,6 +14,7 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -33,7 +34,7 @@ public class NewScheduleActivity extends BaseActivity {
     DateTime startDatetime, endDatetime;
     int trainerId;
 
-    int mYear, mMonth, mDay, mHour;
+    int mYear, mMonth, mDay;
     boolean isStartTime;
 
     DateTime mDateTime;
@@ -58,7 +59,7 @@ public class NewScheduleActivity extends BaseActivity {
 
     public void init(){
 
-        String dateTimeString = getIntent().getStringExtra("DATE_TIME");
+        String dateTimeString = getIntent().getStringExtra("DATE");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         mDateTime = formatter.parseDateTime(dateTimeString);
 
@@ -77,20 +78,24 @@ public class NewScheduleActivity extends BaseActivity {
         memoView.setOnClickListener(this);
 
 
-        if(new DateTime().toString("yyyy-MM-dd").equals(dateTimeString))
-            mHour = mDateTime.getHourOfDay();
-        else
-            mHour = 5;
-
         mYear = mDateTime.getYear();
         mMonth = mDateTime.getMonthOfYear();
         mDay = mDateTime.getDayOfMonth();
 
-        DateTime time = new DateTime(mYear,mMonth,mDay+1,12,0);
-        dateView.setText(time.toString("M월 d일 (E)"));
+        dateView.setText(new DateTime(mYear, mMonth, mDay, 12, 0).toString("M월 d일 (E)"));
 
-        startDatetime = new DateTime(mYear,mMonth,mDay+1,18,0);
-        endDatetime = new DateTime(mYear,mMonth,mDay+1,18,30);
+        LocalTime time ;
+        if(getIntent().hasExtra("TIME")) {
+            String timeString = getIntent().getStringExtra("TIME");
+            formatter = DateTimeFormat.forPattern("hh:mm");
+            time = formatter.parseLocalTime(timeString);
+        }else
+            time = new LocalTime(18,0);
+
+
+        startDatetime = new DateTime(mYear, mMonth, mDay, time.getHourOfDay(), time.getMinuteOfHour());
+        LocalTime eTime = time.plusMinutes(30);
+        endDatetime = new DateTime(mYear, mMonth, mDay, eTime.getHourOfDay(), eTime.getMinuteOfHour());
 
         startTime.setText(startDatetime.toString("a hh:mm"));
         endTime.setText(endDatetime.toString("a hh:mm"));

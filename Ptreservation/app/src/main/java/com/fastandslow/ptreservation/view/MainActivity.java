@@ -74,7 +74,10 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(MainActivity.this, NewScheduleActivity.class);
 
             DateTime curr = mDateList.get(5);
-            intent.putExtra("DATE_TIME",curr.toString("yyyy-MM-dd"));
+            if(curr.getMillis()<new DateTime().getMillis()) {
+                intent.putExtra("DATE",new DateTime().plusDays(1).toString("yyyy-MM-dd"));
+            }else
+                intent.putExtra("DATE",curr.toString("yyyy-MM-dd"));
             startActivity(intent);
 
         }else if(v.getId() == R.id.today ){

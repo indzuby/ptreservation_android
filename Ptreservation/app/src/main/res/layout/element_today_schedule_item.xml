@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <TextView
@@ -33,6 +34,7 @@
 
                 <TextView
                     android:id="@+id/first_pt"
+                    android:background="@drawable/selector_pt_time_background"
                     android:layout_width="match_parent"
                     android:layout_height="36dp" />
             </LinearLayout>
@@ -49,9 +51,9 @@
                 android:layout_height="36dp"
 
                 android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/second_pt"
+                    android:background="@drawable/selector_pt_time_background"
                     android:layout_width="match_parent"
                     android:layout_height="36dp" />
 

@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <ListView
-        android:listSelector="@color/translate"
         android:id="@+id/today_schedule"
         android:layout_marginTop="24dp"
         android:layout_width="match_parent"

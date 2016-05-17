@@ -2,6 +2,7 @@ package com.fastandslow.ptreservation.view.adapter;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,11 +12,15 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fastandslow.ptreservation.R;
 import com.fastandslow.ptreservation.domain.TodaySchedule;
 import com.fastandslow.ptreservation.utils.ContextUtils;
+import com.fastandslow.ptreservation.view.MainActivity;
+import com.fastandslow.ptreservation.view.NewScheduleActivity;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.List;
@@ -23,20 +28,27 @@ import java.util.List;
 /**
  * Created by hyunjin on 2016-04-14.
  */
-public class ScheduleListAdapter extends BaseAdapter {
+public class ScheduleListAdapter extends BaseAdapter implements View.OnClickListener {
     Context mContext;
     List<TodaySchedule> mList;
     private LayoutInflater inflater = null;
     private RecyclerView.ViewHolder viewHolder = null;
 
+    private DateTime mDatetime;
     boolean isToday;
 
-    public ScheduleListAdapter(Context mContext, List<TodaySchedule> mList, boolean isToday) {
+    public ScheduleListAdapter(Context mContext, List<TodaySchedule> mList, boolean isToday,DateTime dateTime) {
         this.mContext = mContext;
         this.mList = mList;
         this.isToday = isToday;
+        mDatetime = dateTime;
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+    }
 
     @Override
     public int getCount() {
@@ -97,6 +109,33 @@ public class ScheduleListAdapter extends BaseAdapter {
                 params.setMargins(0, marginTop, ContextUtils.pxFromDp(mContext, 16), 0);
                 timeIndicator.setLayoutParams(params);
             }
+
+        firstTextView.setOnClickListener(new TimeListener(time.minusMinutes(30)));
+        secondTextView.setOnClickListener(new TimeListener(time));
         return v;
+    }
+
+
+
+    private class TimeListener implements View.OnClickListener{
+        LocalTime startTime;
+
+        public TimeListener(LocalTime startTime) {
+            this.startTime = startTime;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(mContext, NewScheduleActivity.class);
+
+            if(mDatetime.getMillis()<new DateTime().getMillis()) {
+                Toast.makeText(mContext,"24시간 뒤 예약만 가능합니다",Toast.LENGTH_LONG).show();
+            }else {
+                intent.putExtra("DATE",mDatetime.toString("yyyy-MM-dd"));
+                intent.putExtra("TIME",startTime.toString("hh:mm"));
+                mContext.startActivity(intent);
+            }
+        }
     }
 }

@@ -39,7 +39,10 @@ public class ScheduleFragment extends BaseFragment{
         if(v.getId() == R.id.add_schedule) {
             Intent intent = new Intent(getActivity(),NewScheduleActivity.class);
             DateTime curr = mDateTime;
-            intent.putExtra("DATE_TIME",curr.toString("yyyy-MM-dd"));
+            if(curr.getMillis()<new DateTime().getMillis()) {
+                intent.putExtra("DATE",new DateTime().plusDays(1).toString("yyyy-MM-dd"));
+            }else
+                intent.putExtra("DATE",curr.toString("yyyy-MM-dd"));
             startActivity(intent);
         }
     }
@@ -78,7 +81,7 @@ public class ScheduleFragment extends BaseFragment{
             dayOfWeek.setTextColor(ContextCompat.getColor(getContext(),R.color.dark_gray));
         }
 
-        ScheduleListAdapter adapter = new ScheduleListAdapter(getContext(),time,DateUtils.isSameDate(mDateTime,new DateTime()));
+        ScheduleListAdapter adapter = new ScheduleListAdapter(getContext(),time,DateUtils.isSameDate(mDateTime,new DateTime()),mDateTime);
 
         mList.setAdapter(adapter);
 
