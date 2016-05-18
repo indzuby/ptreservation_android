@@ -11,6 +11,7 @@
         android:layout_height="match_parent">
 
     </android.support.v4.view.ViewPager>
+
     <ImageButton
         android:id="@+id/plus_button"
         android:layout_width="56dp"
@@ -20,6 +21,7 @@
         android:background="@drawable/fab_oval"
         android:elevation="4dp"
         android:src="@mipmap/fab_plus_open" />
+
 
 
 </FrameLayout>

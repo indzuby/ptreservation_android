@@ -38,9 +38,26 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_schedule);
+<<<<<<< HEAD
+        ImageButton btn  =(ImageButton) findViewById(R.id.plus_button);
+        TextView textview = (TextView)findViewById(R.id.add_today_schedule);
 
         initActionBar();
         init();
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+=======
+
+        initActionBar();
+        init();
+>>>>>>> 81b5741faab106086c75fad67da1b35cba6925e7
     }
 
 
