@@ -1,5 +1,8 @@
 package com.fastandslow.ptreservation.service;
 
+import com.fastandslow.ptreservation.domain.Common;
+import com.fastandslow.ptreservation.domain.User;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.http.Field;
@@ -13,7 +16,7 @@ import retrofit2.http.POST;
 public interface LoginService {
     @FormUrlEncoded
     @POST("login/login")
-    Call<Void> login(@Field("email") String email, @Field("password") String password);
+    Call<User> login(@Field("email") String email, @Field("password") String password);
 
     @FormUrlEncoded
     @POST("login/dupEmail")

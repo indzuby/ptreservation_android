@@ -5,23 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <android.support.v4.view.ViewPager
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:id="@+id/schedule_viewpager"
         android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/plus_button"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:background="@drawable/fab_oval"
-        android:elevation="4dp"
-        android:src="@mipmap/fab_plus_open" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/schedule_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+            </android.support.v4.view.ViewPager>
+
+            <ImageButton
+                android:id="@+id/plus_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:background="@drawable/fab_oval"
+                android:elevation="4dp"
+                android:src="@mipmap/fab_plus_open" />
+
+        </FrameLayout>
+
+        <ListView
+            android:id="@+id/side_list_view"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white"
+            android:choiceMode="singleChoice">
+
+        </ListView>
+    </android.support.v4.widget.DrawerLayout>
 
 
 </FrameLayout>

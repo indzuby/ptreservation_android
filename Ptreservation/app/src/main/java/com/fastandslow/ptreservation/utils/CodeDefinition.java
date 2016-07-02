@@ -5,6 +5,9 @@ package com.fastandslow.ptreservation.utils;
  */
 public class CodeDefinition {
 
+    final public static String TRAINER_ID = "TRAINER_ID";
+    final public static String CUSTOMER_ID = "CUSTOMER_ID";
+
     final public static String AUTO_LOGIN = "AUTO_LOGIN";
     final public static String EMAIL = "EMAIL";
     final public static String PASSWORD = "PASSWORD";

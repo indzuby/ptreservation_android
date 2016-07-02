@@ -11,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -20,5 +21,12 @@ public interface ReservationService {
 
     @POST("reservations/add")
     Call<Void> addReservations(@Body Reservation reservation);
+
+    @GET("reservations/{id}.json")
+    Call<Reservation> getReservation(@Path("id") int id) ;
+
+    @PUT("reservations/{id}.json")
+    Call<Void> editReservations(@Path("id") int id,@Body Reservation reservation);
+
 
 }

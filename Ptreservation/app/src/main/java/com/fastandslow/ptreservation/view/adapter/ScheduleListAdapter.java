@@ -1,10 +1,10 @@
 package com.fastandslow.ptreservation.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +17,16 @@ import android.widget.Toast;
 import com.fastandslow.ptreservation.R;
 import com.fastandslow.ptreservation.domain.TodaySchedule;
 import com.fastandslow.ptreservation.utils.ContextUtils;
-import com.fastandslow.ptreservation.view.MainActivity;
-import com.fastandslow.ptreservation.view.NewScheduleActivity;
+import com.fastandslow.ptreservation.utils.StateUtils;
+import com.fastandslow.ptreservation.view.trainer.NewScheduleActivity;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
 import java.util.List;
+import java.util.Map;
+
+import lombok.Setter;
 
 /**
  * Created by hyunjin on 2016-04-14.
@@ -31,17 +34,19 @@ import java.util.List;
 public class ScheduleListAdapter extends BaseAdapter implements View.OnClickListener {
     Context mContext;
     List<TodaySchedule> mList;
-    private LayoutInflater inflater = null;
-    private RecyclerView.ViewHolder viewHolder = null;
-
+    @Setter
+    Map<String, Integer> mReservationMap;
     private DateTime mDatetime;
     boolean isToday;
+    boolean isTrainer;
 
-    public ScheduleListAdapter(Context mContext, List<TodaySchedule> mList, boolean isToday,DateTime dateTime) {
+    public ScheduleListAdapter(Context mContext, List<TodaySchedule> mList, boolean isToday, DateTime dateTime, Map<String, Integer> reservationMap) {
         this.mContext = mContext;
         this.mList = mList;
         this.isToday = isToday;
         mDatetime = dateTime;
+        mReservationMap = reservationMap;
+        isTrainer = StateUtils.isTrainer(mContext);
     }
 
 
@@ -85,7 +90,8 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
 
         firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.translate));
         secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.translate));
-
+        firstTextView.setText("");
+        secondTextView.setText("");
         LocalTime nowTime = new LocalTime();
 
         LocalTime beforeTime = time.minusMinutes(30);
@@ -109,15 +115,21 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
                 params.setMargins(0, marginTop, ContextUtils.pxFromDp(mContext, 16), 0);
                 timeIndicator.setLayoutParams(params);
             }
-
+        if (mReservationMap.containsKey(beforeTime.toString("HH:mm"))) {
+            firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_translate));
+            firstTextView.setText(" * 예약");
+        }
+        if (mReservationMap.containsKey(time.toString("HH:mm"))) {
+            secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_translate));
+            secondTextView.setText(" * 예약");
+        }
         firstTextView.setOnClickListener(new TimeListener(time.minusMinutes(30)));
         secondTextView.setOnClickListener(new TimeListener(time));
         return v;
     }
 
 
-
-    private class TimeListener implements View.OnClickListener{
+    private class TimeListener implements View.OnClickListener {
         LocalTime startTime;
 
         public TimeListener(LocalTime startTime) {
@@ -129,13 +141,19 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
 
             Intent intent = new Intent(mContext, NewScheduleActivity.class);
 
-            if(mDatetime.getMillis()<new DateTime().getMillis()) {
-                Toast.makeText(mContext,"24시간 뒤 예약만 가능합니다",Toast.LENGTH_LONG).show();
-            }else {
-                intent.putExtra("DATE",mDatetime.toString("yyyy-MM-dd"));
-                intent.putExtra("TIME",startTime.toString("hh:mm"));
-                mContext.startActivity(intent);
+            if (isToday && startTime.getHourOfDay() <= new DateTime().getHourOfDay()) {
+                Toast.makeText(mContext, "예약이 불가능한 시간입니다.", Toast.LENGTH_LONG).show();
+                return;
             }
+            intent.putExtra("DATE", mDatetime.toString("yyyy-MM-dd"));
+            intent.putExtra("TIME", startTime.toString("HH:mm"));
+            if (mReservationMap.containsKey(startTime.toString("HH:mm"))) {
+                intent.putExtra("isEdit", true);
+                intent.putExtra("id", mReservationMap.get(startTime.toString("HH:mm")));
+            } else
+                intent.putExtra("isEdit", false);
+            ((Activity)mContext).startActivityForResult(intent,1001);
+
         }
     }
 }

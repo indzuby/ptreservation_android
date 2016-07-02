@@ -1,4 +1,4 @@
-package com.fastandslow.ptreservation.view;
+package com.fastandslow.ptreservation.view.common;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fastandslow.ptreservation.R;
+import com.fastandslow.ptreservation.domain.Common;
+import com.fastandslow.ptreservation.domain.User;
 import com.fastandslow.ptreservation.network.RestApi;
 import com.fastandslow.ptreservation.utils.CodeDefinition;
 import com.fastandslow.ptreservation.utils.SessionUtils;
-import com.fastandslow.ptreservation.view.common.BaseActivity;
+import com.fastandslow.ptreservation.view.trainer.TrainerMainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +35,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    public void startMainActivity() {
+    public void startTrainerMainActivity() {
         if (!isAutoLogin) {
             SessionUtils.putBoolean(this, CodeDefinition.AUTO_LOGIN, autoLogin.isChecked());
             if (autoLogin.isChecked()) {
@@ -41,35 +43,41 @@ public class LoginActivity extends BaseActivity {
                 SessionUtils.putString(this, CodeDefinition.PASSWORD, mPasswordEditText.getText().toString());
             }
         }
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, TrainerMainActivity.class);
         startActivity(intent);
         finish();
     }
 
     public void login(String email, String password) {
-
-        RestApi.getInstance(this).login(email, password,
-                new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.code() == 200 || response.code() == 201) {
-                            if(response.code()==200)
-                                SessionUtils.putString(getBaseContext(),CodeDefinition.USER_STATE,CodeDefinition.TRAINER);
-                            else
-                                SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.CUSTOMER);
-
-                            startMainActivity();
-
-                        } else {
-//                            Toast.makeText(getBaseContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+        try {
+            RestApi.getInstance(this).login(email, password,
+                    new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.code() == 200 || response.code() == 201) {
+                                if (response.code() == 200) {
+                                    SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.TRAINER);
+                                    SessionUtils.putInt(getBaseContext(), CodeDefinition.TRAINER_ID, response.body().getId());
+                                    Toast.makeText(getBaseContext(), response.body().getName() + "님 \n관리자로 로그인했습니다.", Toast.LENGTH_SHORT).show();
+                                    startTrainerMainActivity();
+                                } else {
+                                    SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.CUSTOMER);
+                                    SessionUtils.putInt(getBaseContext(), CodeDefinition.CUSTOMER_ID, response.body().getId());
+                                    Toast.makeText(getBaseContext(), response.body().getName() + "님 \n회원으로 로그인했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getBaseContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-//                        Toast.makeText(getBaseContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            Toast.makeText(getBaseContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -89,10 +97,8 @@ public class LoginActivity extends BaseActivity {
             String password = SessionUtils.getString(this, CodeDefinition.PASSWORD, "password");
             mEmailEditText.setText(email);
             mPasswordEditText.setText(password);
-            login(email,password);
+            login(email, password);
         }
-
-
         findViewById(R.id.login_button).setOnClickListener(this);
         autoLogin = (CheckBox) findViewById(R.id.auto_login);
     }

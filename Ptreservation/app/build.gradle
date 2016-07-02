@@ -28,8 +28,9 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.tsengvn:Typekit:1.0.0'
     compile 'joda-time:joda-time:2.9.1'
-    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.google.code.gson:gson:2.6.2'
     provided 'org.projectlombok:lombok:1.12.6'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
 }

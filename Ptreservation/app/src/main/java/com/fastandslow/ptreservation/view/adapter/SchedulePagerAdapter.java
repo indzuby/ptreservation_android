@@ -3,10 +3,9 @@ package com.fastandslow.ptreservation.view.adapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.fastandslow.ptreservation.view.ScheduleFragment;
+import com.fastandslow.ptreservation.view.trainer.ScheduleFragment;
 
 import org.joda.time.DateTime;
 
@@ -18,18 +17,21 @@ import java.util.List;
 public class SchedulePagerAdapter extends FragmentStatePagerAdapter {
 
     List<DateTime> mTimeList;
+    ScheduleFragment[] fragments;
     public SchedulePagerAdapter(FragmentManager fm,List<DateTime> mList) {
         super(fm);
         mTimeList = mList;
+        fragments = new ScheduleFragment[mList.size()];
     }
 
     @Override
     public Fragment getItem(int position) {
 
-        Fragment fragment = new ScheduleFragment();
+        ScheduleFragment fragment = new ScheduleFragment();
         Bundle bundle = new Bundle();
         bundle.putString("DATE_TIME", mTimeList.get(position).toString("yyyy-MM-dd"));
         fragment.setArguments(bundle);
+        fragments[position] = fragment;
 
         return fragment;
     }

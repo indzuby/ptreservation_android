@@ -34,6 +34,8 @@
 
                 <TextView
                     android:id="@+id/first_pt"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/dark_gray"
                     android:background="@drawable/selector_pt_time_background"
                     android:layout_width="match_parent"
                     android:layout_height="36dp" />
@@ -53,6 +55,8 @@
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/second_pt"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/dark_gray"
                     android:background="@drawable/selector_pt_time_background"
                     android:layout_width="match_parent"
                     android:layout_height="36dp" />

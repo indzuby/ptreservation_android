@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.fastandslow.ptreservation.domain.Common;
 import com.fastandslow.ptreservation.domain.Customer;
 import com.fastandslow.ptreservation.domain.Reservation;
+import com.fastandslow.ptreservation.domain.User;
 import com.fastandslow.ptreservation.service.CustomerService;
 import com.fastandslow.ptreservation.service.LoginService;
 import com.fastandslow.ptreservation.service.ReservationService;
@@ -23,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by zuby on 2016. 4. 30..
@@ -33,7 +36,7 @@ public class RestApi {
 
 
 //    final static String url = "http://localhost:8000/";
-    final static String url = "http://192.168.0.82:3000/";
+    final static String url = "http://192.168.0.13:3000/";
 
     Context mContext;
     private static RestApi instance ;
@@ -52,6 +55,7 @@ public class RestApi {
         this.mContext = mContext;
         retrofit = new Retrofit.Builder()
                 .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
@@ -85,30 +89,47 @@ public class RestApi {
             customerService = retrofit.create(CustomerService.class);
     }
 
-    public void login(String email, String password,Callback<Void> callback){
+    public void login(String email, String password,Callback<User> callback) throws Exception{
         initLoginService();
-        Call<Void> logins = loginService.login(email, password);
+        Call<User> logins = loginService.login(email, password);
         logins.enqueue(callback);
     }
 
-    public void addReservation(Reservation reservation,Callback<Void> callback) {
+    public void addReservation(Reservation reservation,Callback<Void> callback) throws Exception {
         initReservationService();
         Call<Void> reservations = reservationService.addReservations(reservation);
         reservations.enqueue(callback);
     }
 
-    public void getListByDateCustomer(DateTime date,Callback<List<Reservation>> callback) {
+    public void editReservation(Reservation reservation,Callback<Void> callback) throws Exception {
+        initReservationService();
+        Call<Void> reservations = reservationService.editReservations(reservation.getId(),reservation);
+        reservations.enqueue(callback);
+    }
+
+    public void getListByDateCustomer(int id, DateTime date,Callback<List<Reservation>> callback) throws Exception{
         String state = SessionUtils.getString(mContext, CodeDefinition.USER_STATE,CodeDefinition.CUSTOMER);
         if(state.equals(CodeDefinition.CUSTOMER)) {
             initCustomerService();
-            Call<List<Reservation>> reservations = customerService.getListByDate(date.toString("yyyy-MM-dd"));
+            Call<List<Reservation>> reservations = customerService.getListByDate(id,date.toString("yyyy-MM-dd"));
             reservations.enqueue(callback);
         }else {
             initTrainerService();
-            Call<List<Reservation>> reservations = trainerService.getListByDate(date.toString("yyyy-MM-dd"));
+            Call<List<Reservation>> reservations = trainerService.getListByDate(id,date.toString("yyyy-MM-dd"));
             reservations.enqueue(callback);
         }
     }
 
+    public void getCustomers(int trainerId,Callback<List<Customer>> callback) throws Exception{
+        initCustomerService();
+        Call<List<Customer>> customers = customerService.getCustomer(trainerId);
+        customers.enqueue(callback);
+    }
+
+    public void getReservation(int id,Callback<Reservation> callback) throws Exception {
+        initReservationService();
+        Call<Reservation> reservations = reservationService.getReservation(id);
+        reservations.enqueue(callback);
+    }
 
 }

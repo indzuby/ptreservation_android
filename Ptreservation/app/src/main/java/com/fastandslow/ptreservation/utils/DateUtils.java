@@ -1,5 +1,6 @@
 package com.fastandslow.ptreservation.utils;
 
+import com.fastandslow.ptreservation.domain.Reservation;
 import com.fastandslow.ptreservation.domain.TodaySchedule;
 
 import org.joda.time.DateTime;
@@ -26,7 +27,6 @@ public class DateUtils {
         }
         return list;
     }
-
     public static List<DateTime> getTenDateList(DateTime now){
         List<DateTime> dateList = new ArrayList<>();
         for(int i = -5;i<=4;i++)

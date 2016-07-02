@@ -16,14 +16,14 @@ import retrofit2.http.Path;
 public interface TrainerService {
 
     @GET("trainers.json")
-    Call<List<Trainer>> getTrainerList(Callback<List<Trainer>> callback);
+    Call<List<Trainer>> getTrainerList();
 
-    @GET("reservations/trainer/date/{date}")
-    Call<List<Reservation>> getListByDate(@Path("date") String date);
+    @GET("reservations/trainer/{id}/date/{date}")
+    Call<List<Reservation>> getListByDate(@Path("id") int id,@Path("date") String date);
 
-    @GET("reservations/trainer/week/{date}")
-    Call<List<Reservation>> getListByWeek(@Path("date") String date);
+    @GET("reservations/trainer/{id}/week/{date}")
+    Call<List<Reservation>> getListByWeek(@Path("id") int id,@Path("date") String date);
 
-    @GET("reservations/trainer/month/{year}/{month}")
-    Call<List<Reservation>> getListByMonth(@Path("year") String year,@Path("month") String month);
+    @GET("reservations/trainer/{id}/month/{year}/{month}")
+    Call<List<Reservation>> getListByMonth(@Path("id") int id,@Path("year") String year,@Path("month") String month);
 }

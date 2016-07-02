@@ -1,5 +1,8 @@
 package com.fastandslow.ptreservation.domain;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 import lombok.Data;
@@ -9,8 +12,14 @@ import lombok.Data;
  */
 @Data
 public class Common {
+    @SerializedName("id")
+    @Expose
     int id;
+    @SerializedName("created_at")
+    @Expose
     Date created_at;
     Date updated_at;
-    boolean is_delete;
+    @SerializedName("is_delete")
+    @Expose
+    int isDelete;
 }

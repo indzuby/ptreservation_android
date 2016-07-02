@@ -6,10 +6,9 @@ import lombok.Data;
  * Created by zuby on 2016. 4. 30..
  */
 @Data
-public class Trainer extends User{
+public class Trainer extends Common{
     int user_id;
     int company_id;
-    String company_name;
-    String company_tel;
-    String company_address;
+    Company company;
+    User user;
 }

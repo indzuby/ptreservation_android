@@ -1,5 +1,11 @@
 package com.fastandslow.ptreservation.domain;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
+
 import java.util.Date;
 
 import lombok.Data;
@@ -10,13 +16,26 @@ import lombok.Data;
 @Data
 public class Reservation extends Common{
 
-    int trainer_id;
-    int customer_id;
-    Date start_datetime;
-    Date end_datetime;
-
-    boolean is_delete;
-
+    @SerializedName("trainer_id")
+    @Expose
+    int trainerId;
+    @SerializedName("customer_id")
+    @Expose
+    int customerId;
+    @SerializedName("start_datetime")
+    @Expose
+    Date startDatetime;
+    @SerializedName("end_datetime")
+    @Expose
+    Date endDatetime;
+    @SerializedName("memo")
+    @Expose
     String memo;
 
+    public Date getStartDatetime(){
+        return new DateTime(startDatetime).minusHours(9).toDate();
+    }
+    public Date getEndDatetime(){
+        return new DateTime(endDatetime).minusHours(9).toDate();
+    }
 }
