@@ -1,10 +1,8 @@
 package com.fastandslow.ptreservation.view.customer;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -27,9 +25,7 @@ import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,22 +34,19 @@ import retrofit2.Response;
 /**
  * Created by hjan1 on 2016-05-11.
  */
-public class NewScheduleActivity extends BaseActivity {
-    TextView trainerView;
+public class CustomerNewScheduleActivity extends BaseActivity {
     TextView dateView;
     TextView startTime, endTime;
     TextView alarmView;
-    TextView customerView;
+    TextView nameView;
     EditText memoView;
-    List<Customer> customerList;
-    String[] customerNameList;
 
     Reservation reservation;
 
 
     DateTime startDatetime, endDatetime;
     int mId;
-    int customerIndex;
+    Customer mCustomer;
 
     int mYear, mMonth, mDay;
     boolean isStartTime;
@@ -85,21 +78,21 @@ public class NewScheduleActivity extends BaseActivity {
     }
 
     public void init() {
-        if (isTrainer) getCustomerList();
+        if (!isTrainer) getCustomerInfo();
         reservation = new Reservation();
 
         String dateTimeString = getIntent().getStringExtra("DATE");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         mDateTime = formatter.parseDateTime(dateTimeString);
 
-        customerView = (TextView) findViewById(R.id.customer_view);
+        nameView = (TextView) findViewById(R.id.name_view);
         dateView = (TextView) findViewById(R.id.date);
         startTime = (TextView) findViewById(R.id.start_time);
         endTime = (TextView) findViewById(R.id.end_time);
         alarmView = (TextView) findViewById(R.id.alarm_view);
         memoView = (EditText) findViewById(R.id.memo);
 
-        customerView.setOnClickListener(this);
+        nameView.setOnClickListener(this);
         dateView.setOnClickListener(this);
         startTime.setOnClickListener(this);
         endTime.setOnClickListener(this);
@@ -150,18 +143,12 @@ public class NewScheduleActivity extends BaseActivity {
                     startDatetime = new DateTime(reservation.getStartDatetime());
                     endDatetime = new DateTime(reservation.getEndDatetime());
 
+                    reservation.setStartDatetime(startDatetime.toDate());
+                    reservation.setEndDatetime(endDatetime.toDate());
+
                     startTime.setText(startDatetime.toString("a hh:mm"));
                     endTime.setText(endDatetime.toString("a hh:mm"));
                     memoView.setText(reservation.getMemo());
-
-                    for (int i = 0; i < customerList.size(); i++) {
-                        Customer c = customerList.get(i);
-                        if (c.getId() == reservation.getCustomerId()) {
-                            customerIndex = i;
-                            customerView.setText(customerNameList[i]);
-                            break;
-                        }
-                    }
                 }
 
                 @Override
@@ -175,27 +162,21 @@ public class NewScheduleActivity extends BaseActivity {
 
     }
 
-    public void getCustomerList() {
+    public void getCustomerInfo() {
         try {
-            RestApi.getInstance(this).getCustomers(mId, new Callback<List<Customer>>() {
+            RestApi.getInstance(this).getCustomer(mId, new Callback<Customer>() {
                 @Override
-                public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
                     if (response.code() == 200) {
-                        customerList = response.body();
-                        Log.e("Customer size ", customerList.size() + "");
-                        List<String> list = new ArrayList<String>();
-                        for (Customer c : customerList) {
-                            list.add(c.getUser().getName() + ", " + c.getUser().getTel()+", " + c.getPtCount());
-                        }
-                        customerNameList = list.toArray(new String[list.size()]);
-                        customerView.setText(customerNameList[0]);
+                        mCustomer = response.body();
+                        nameView.setText(mCustomer.getTrainer().getUser().getName() + " 트레이너 (" + mCustomer.getTrainer().getUser().getTel() + ","+mCustomer.getPtCount()+"회)");
                         if (isEdit)
                             initData();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<List<Customer>> call, Throwable t) {
+                public void onFailure(Call<Customer> call, Throwable t) {
                     Log.e("FAILURE", "FAILURE");
                     t.printStackTrace();
                 }
@@ -213,7 +194,7 @@ public class NewScheduleActivity extends BaseActivity {
                     if (response.code() == 201) {
                         Toast.makeText(getBaseContext(), "예약하였습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
-                        intent.putExtra("DATE", new DateTime(reservation.getStartDatetime()).toString("yyyy-MM-dd"));
+                        intent.putExtra("DATE", new DateTime(reservation.getLocalStartDatetime()).toString("yyyy-MM-dd"));
                         setResult(RESULT_OK, intent);
                         finish();
                     } else
@@ -237,7 +218,7 @@ public class NewScheduleActivity extends BaseActivity {
                     if (response.code() == 200) {
                         Toast.makeText(getBaseContext(), "수정하였습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
-                        intent.putExtra("DATE", new DateTime(reservation.getStartDatetime()).toString("yyyy-MM-dd"));
+                        intent.putExtra("DATE", new DateTime(reservation.getLocalStartDatetime()).toString("yyyy-MM-dd"));
                         setResult(RESULT_OK, intent);
                         finish();
                     } else
@@ -280,6 +261,7 @@ public class NewScheduleActivity extends BaseActivity {
                 endDatetime = startDatetime.plusMinutes(30);
                 endTime.setText(endDatetime.toString("a hh:mm"));
                 reservation.setStartDatetime(startDatetime.toDate());
+                reservation.setEndDatetime(endDatetime.toDate());
             } else {
                 endTime.setText(time.toString("a hh:mm"));
                 endDatetime = time;
@@ -302,18 +284,8 @@ public class NewScheduleActivity extends BaseActivity {
             case R.id.back:
                 finish();
                 break;
-            case R.id.customer_view:
-                if (customerList != null) {
-                    AlertDialog.Builder ab = new AlertDialog.Builder(this);
-                    ab.setSingleChoiceItems(customerNameList, customerIndex, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            customerView.setText(customerNameList[which]);
-                            customerIndex = which;
-                            dialog.dismiss();
-                        }
-                    }).show();
-                }
+            case R.id.name_view:
+                // telephone
                 break;
             case R.id.date:
                 DatePickerDialog dpd = DatePickerDialog.newInstance(dateSetListener,
@@ -343,8 +315,8 @@ public class NewScheduleActivity extends BaseActivity {
                 break;
             case R.id.save:
                 reservation.setMemo(memoView.getText().toString());
-                reservation.setCustomerId(customerList.get(customerIndex).getId());
-                reservation.setTrainerId(mId);
+                reservation.setCustomerId(mCustomer.getId());
+                reservation.setTrainerId(mCustomer.getTrainer().getId());
                 if (isEdit)
                     editReservation();
                 else

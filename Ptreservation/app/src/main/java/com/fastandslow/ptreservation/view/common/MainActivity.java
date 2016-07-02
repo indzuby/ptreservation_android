@@ -1,4 +1,4 @@
-package com.fastandslow.ptreservation.view.trainer;
+package com.fastandslow.ptreservation.view.common;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,16 +12,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.fastandslow.ptreservation.R;
 import com.fastandslow.ptreservation.utils.CodeDefinition;
 import com.fastandslow.ptreservation.utils.ContextUtils;
 import com.fastandslow.ptreservation.utils.DateUtils;
 import com.fastandslow.ptreservation.utils.SessionUtils;
+import com.fastandslow.ptreservation.utils.StateUtils;
 import com.fastandslow.ptreservation.view.adapter.SchedulePagerAdapter;
 import com.fastandslow.ptreservation.view.adapter.SideMenuAdapter;
-import com.fastandslow.ptreservation.view.common.BaseActivity;
-import com.fastandslow.ptreservation.view.common.LoginActivity;
+import com.fastandslow.ptreservation.view.customer.CustomerNewScheduleActivity;
+import com.fastandslow.ptreservation.view.trainer.TrainerNewScheduleActivity;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.joda.time.DateTime;
@@ -31,7 +31,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 
-public class TrainerMainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
 
     ViewPager mSchedulePager;
@@ -41,11 +41,12 @@ public class TrainerMainActivity extends BaseActivity {
     List<DateTime> mDateList;
     DrawerLayout mDrawerLayout;
     ListView mSideMenu;
+    boolean isTrainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_schedule);
-
+        isTrainer = StateUtils.isTrainer(this);
         initActionBar();
         init();
 
@@ -64,7 +65,7 @@ public class TrainerMainActivity extends BaseActivity {
                 mActionBarTitle.setText((monthOfYear) + "월");
             mDateList = DateUtils.getTenDateList(now);
 
-            pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList);
+            pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList,isTrainer);
             currentItem = -1;
             mSchedulePager.setAdapter(pagerAdapter);
             mSchedulePager.setCurrentItem(5);
@@ -80,8 +81,11 @@ public class TrainerMainActivity extends BaseActivity {
             DatePickerDialog dpd = DatePickerDialog.newInstance(dateSetListener, now.getYear(), now.getMonthOfYear() - 1, now.getDayOfMonth());
             dpd.show(getFragmentManager(), "Datepickerdialog");
         } else if (v.getId() == R.id.plus_button) {
-            Intent intent = new Intent(TrainerMainActivity.this, NewScheduleActivity.class);
-
+            Intent intent;
+            if(isTrainer)
+                intent = new Intent(MainActivity.this, TrainerNewScheduleActivity.class);
+            else
+                intent = new Intent(MainActivity.this, CustomerNewScheduleActivity.class);
             DateTime curr = mDateList.get(5);
             intent.putExtra("DATE",curr.toString("yyyy-MM-dd"));
             if(curr.getMillis()<new DateTime().getMillis())
@@ -92,7 +96,7 @@ public class TrainerMainActivity extends BaseActivity {
             if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) mDrawerLayout.closeDrawers();
             mDateList = DateUtils.getTenDateList();
 
-            pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList);
+            pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList,isTrainer);
             currentItem = -1;
             mSchedulePager.setAdapter(pagerAdapter);
             mSchedulePager.setCurrentItem(5);
@@ -125,7 +129,7 @@ public class TrainerMainActivity extends BaseActivity {
                     SessionUtils.putBoolean(getBaseContext(), CodeDefinition.AUTO_LOGIN, false);
                     SessionUtils.putString(getBaseContext(), CodeDefinition.EMAIL, "");
                     SessionUtils.putString(getBaseContext(), CodeDefinition.PASSWORD, "");
-                    Intent intent = new Intent(TrainerMainActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -137,7 +141,7 @@ public class TrainerMainActivity extends BaseActivity {
 
 
         mSchedulePager = (ViewPager) findViewById(R.id.schedule_viewpager);
-        pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList);
+        pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList,isTrainer);
 
 
         mSchedulePager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -192,7 +196,7 @@ public class TrainerMainActivity extends BaseActivity {
                 DateTime date = formatter.parseDateTime(dateTimeString);
 
                 mDateList = DateUtils.getTenDateList(date);
-                pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList);
+                pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList,isTrainer);
                 currentItem = -1;
                 mSchedulePager.setAdapter(pagerAdapter);
                 mSchedulePager.setCurrentItem(5);

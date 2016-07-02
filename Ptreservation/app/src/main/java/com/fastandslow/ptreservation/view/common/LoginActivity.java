@@ -8,12 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fastandslow.ptreservation.R;
-import com.fastandslow.ptreservation.domain.Common;
 import com.fastandslow.ptreservation.domain.User;
 import com.fastandslow.ptreservation.network.RestApi;
 import com.fastandslow.ptreservation.utils.CodeDefinition;
 import com.fastandslow.ptreservation.utils.SessionUtils;
-import com.fastandslow.ptreservation.view.trainer.TrainerMainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +33,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    public void startTrainerMainActivity() {
+    public void startMainActivity() {
         if (!isAutoLogin) {
             SessionUtils.putBoolean(this, CodeDefinition.AUTO_LOGIN, autoLogin.isChecked());
             if (autoLogin.isChecked()) {
@@ -43,11 +41,10 @@ public class LoginActivity extends BaseActivity {
                 SessionUtils.putString(this, CodeDefinition.PASSWORD, mPasswordEditText.getText().toString());
             }
         }
-        Intent intent = new Intent(this, TrainerMainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
-
     public void login(String email, String password) {
         try {
             RestApi.getInstance(this).login(email, password,
@@ -59,12 +56,12 @@ public class LoginActivity extends BaseActivity {
                                     SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.TRAINER);
                                     SessionUtils.putInt(getBaseContext(), CodeDefinition.TRAINER_ID, response.body().getId());
                                     Toast.makeText(getBaseContext(), response.body().getName() + "님 \n관리자로 로그인했습니다.", Toast.LENGTH_SHORT).show();
-                                    startTrainerMainActivity();
                                 } else {
                                     SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.CUSTOMER);
                                     SessionUtils.putInt(getBaseContext(), CodeDefinition.CUSTOMER_ID, response.body().getId());
                                     Toast.makeText(getBaseContext(), response.body().getName() + "님 \n회원으로 로그인했습니다.", Toast.LENGTH_SHORT).show();
                                 }
+                                startMainActivity();
                             } else {
                                 Toast.makeText(getBaseContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                             }

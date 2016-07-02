@@ -29,7 +29,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,7 +38,7 @@ import retrofit2.Response;
 /**
  * Created by hjan1 on 2016-05-11.
  */
-public class NewScheduleActivity extends BaseActivity {
+public class TrainerNewScheduleActivity extends BaseActivity {
     TextView trainerView;
     TextView dateView;
     TextView startTime, endTime;
@@ -91,7 +90,7 @@ public class NewScheduleActivity extends BaseActivity {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         mDateTime = formatter.parseDateTime(dateTimeString);
 
-        customerView = (TextView) findViewById(R.id.customer_view);
+        customerView = (TextView) findViewById(R.id.name_view);
         dateView = (TextView) findViewById(R.id.date);
         startTime = (TextView) findViewById(R.id.start_time);
         endTime = (TextView) findViewById(R.id.end_time);
@@ -148,6 +147,9 @@ public class NewScheduleActivity extends BaseActivity {
                     dateView.setText(new DateTime(reservation.getStartDatetime()).toString("M월 d일 (E)"));
                     startDatetime = new DateTime(reservation.getStartDatetime());
                     endDatetime = new DateTime(reservation.getEndDatetime());
+
+                    reservation.setStartDatetime(startDatetime.toDate());
+                    reservation.setEndDatetime(endDatetime.toDate());
 
                     startTime.setText(startDatetime.toString("a hh:mm"));
                     endTime.setText(endDatetime.toString("a hh:mm"));
@@ -212,7 +214,7 @@ public class NewScheduleActivity extends BaseActivity {
                     if (response.code() == 201) {
                         Toast.makeText(getBaseContext(), "예약하였습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
-                        intent.putExtra("DATE", new DateTime(reservation.getStartDatetime()).toString("yyyy-MM-dd"));
+                        intent.putExtra("DATE", new DateTime(reservation.getLocalStartDatetime()).toString("yyyy-MM-dd"));
                         setResult(RESULT_OK, intent);
                         finish();
                     } else
@@ -236,7 +238,7 @@ public class NewScheduleActivity extends BaseActivity {
                     if (response.code() == 200) {
                         Toast.makeText(getBaseContext(), "수정하였습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
-                        intent.putExtra("DATE", new DateTime(reservation.getStartDatetime()).toString("yyyy-MM-dd"));
+                        intent.putExtra("DATE", new DateTime(reservation.getLocalStartDatetime()).toString("yyyy-MM-dd"));
                         setResult(RESULT_OK, intent);
                         finish();
                     } else
@@ -279,6 +281,7 @@ public class NewScheduleActivity extends BaseActivity {
                 endDatetime = startDatetime.plusMinutes(30);
                 endTime.setText(endDatetime.toString("a hh:mm"));
                 reservation.setStartDatetime(startDatetime.toDate());
+                reservation.setEndDatetime(endDatetime.toDate());
             } else {
                 endTime.setText(time.toString("a hh:mm"));
                 endDatetime = time;
@@ -301,7 +304,7 @@ public class NewScheduleActivity extends BaseActivity {
             case R.id.back:
                 finish();
                 break;
-            case R.id.customer_view:
+            case R.id.name_view:
                 if (customerList != null) {
                     AlertDialog.Builder ab = new AlertDialog.Builder(this);
                     ab.setSingleChoiceItems(customerNameList, customerIndex, new DialogInterface.OnClickListener() {
@@ -347,7 +350,6 @@ public class NewScheduleActivity extends BaseActivity {
                 if (isEdit)
                     editReservation();
                 else
-
                     addReservation();
                 break;
         }

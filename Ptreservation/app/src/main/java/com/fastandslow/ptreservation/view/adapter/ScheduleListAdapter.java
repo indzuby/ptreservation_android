@@ -18,11 +18,13 @@ import com.fastandslow.ptreservation.R;
 import com.fastandslow.ptreservation.domain.TodaySchedule;
 import com.fastandslow.ptreservation.utils.ContextUtils;
 import com.fastandslow.ptreservation.utils.StateUtils;
-import com.fastandslow.ptreservation.view.trainer.NewScheduleActivity;
+import com.fastandslow.ptreservation.view.customer.CustomerNewScheduleActivity;
+import com.fastandslow.ptreservation.view.trainer.TrainerNewScheduleActivity;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,19 +38,21 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
     List<TodaySchedule> mList;
     @Setter
     Map<String, Integer> mReservationMap;
+    @Setter
+    Map<String, Integer> mTrainerReservationMap;
     private DateTime mDatetime;
     boolean isToday;
     boolean isTrainer;
-
-    public ScheduleListAdapter(Context mContext, List<TodaySchedule> mList, boolean isToday, DateTime dateTime, Map<String, Integer> reservationMap) {
+    public ScheduleListAdapter(Context mContext, List<TodaySchedule> mList, boolean isToday, DateTime dateTime, Map<String, Integer> reservationMap,Map<String, Integer> trainerReservationsMap) {
         this.mContext = mContext;
         this.mList = mList;
         this.isToday = isToday;
         mDatetime = dateTime;
         mReservationMap = reservationMap;
-        isTrainer = StateUtils.isTrainer(mContext);
+        isTrainer = true;
+        mTrainerReservationMap = trainerReservationsMap;
+        isTrainer = false;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -118,10 +122,16 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
         if (mReservationMap.containsKey(beforeTime.toString("HH:mm"))) {
             firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_translate));
             firstTextView.setText(" * 예약");
+        }else if(mTrainerReservationMap.containsKey(beforeTime.toString("HH:mm"))) {
+            firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red_translate));
+            firstTextView.setText(" * 다른 회원 예약");
         }
         if (mReservationMap.containsKey(time.toString("HH:mm"))) {
             secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_translate));
             secondTextView.setText(" * 예약");
+        }else if(mTrainerReservationMap.containsKey(time.toString("HH:mm"))) {
+            secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red_translate));
+            secondTextView.setText(" * 다른 회원 예약");
         }
         firstTextView.setOnClickListener(new TimeListener(time.minusMinutes(30)));
         secondTextView.setOnClickListener(new TimeListener(time));
@@ -138,10 +148,17 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
 
         @Override
         public void onClick(View v) {
+            boolean isTrainer = StateUtils.isTrainer(mContext);
+            Intent intent;
+            if (isTrainer)
+                intent = new Intent(mContext, TrainerNewScheduleActivity.class);
+            else
+                intent = new Intent(mContext, CustomerNewScheduleActivity.class);
 
-            Intent intent = new Intent(mContext, NewScheduleActivity.class);
+            if(!isTrainer && mTrainerReservationMap.containsKey(startTime.toString("HH:mm")))
+                return;
 
-            if (isToday && startTime.getHourOfDay() <= new DateTime().getHourOfDay()) {
+            if (!isTrainer && isToday && startTime.getHourOfDay() <= new DateTime().getHourOfDay() && !mReservationMap.containsKey(startTime.toString("HH:mm"))) {
                 Toast.makeText(mContext, "예약이 불가능한 시간입니다.", Toast.LENGTH_LONG).show();
                 return;
             }

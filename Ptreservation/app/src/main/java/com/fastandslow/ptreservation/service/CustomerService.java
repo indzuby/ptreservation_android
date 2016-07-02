@@ -26,6 +26,9 @@ public interface CustomerService {
     Call<List<Reservation>> getistByMonth(@Path("id") int id,@Path("year") String year,@Path("month") String month);
 
     @GET("trainers/{trainer_id}/customers")
-    Call<List<Customer>> getCustomer(@Path("trainer_id") int trainerId);
+    Call<List<Customer>> getCustomers(@Path("trainer_id") int trainerId);
+
+    @GET("/customers/{id}.json")
+    Call<Customer> getCustomer(@Path("id") int id);
 }
 

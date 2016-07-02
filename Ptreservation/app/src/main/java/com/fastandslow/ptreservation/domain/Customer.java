@@ -16,4 +16,9 @@ public class Customer extends Common{
     @SerializedName("user")
     @Expose
     User user;
+
+    @SerializedName("trainer")
+    @Expose
+    Trainer trainer;
+
 }

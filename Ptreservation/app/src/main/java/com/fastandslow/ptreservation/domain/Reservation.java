@@ -38,4 +38,10 @@ public class Reservation extends Common{
     public Date getEndDatetime(){
         return new DateTime(endDatetime).minusHours(9).toDate();
     }
+    public Date getLocalStartDatetime(){
+        return new DateTime(startDatetime).toDate();
+    }
+    public Date getLocalEndDatetime(){
+        return new DateTime(endDatetime).toDate();
+    }
 }

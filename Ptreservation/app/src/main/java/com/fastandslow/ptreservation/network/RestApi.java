@@ -1,10 +1,7 @@
 package com.fastandslow.ptreservation.network;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.fastandslow.ptreservation.domain.Common;
 import com.fastandslow.ptreservation.domain.Customer;
 import com.fastandslow.ptreservation.domain.Reservation;
 import com.fastandslow.ptreservation.domain.User;
@@ -17,13 +14,10 @@ import com.fastandslow.ptreservation.utils.SessionUtils;
 
 import org.joda.time.DateTime;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -103,26 +97,31 @@ public class RestApi {
 
     public void editReservation(Reservation reservation,Callback<Void> callback) throws Exception {
         initReservationService();
-        Call<Void> reservations = reservationService.editReservations(reservation.getId(),reservation);
+        Call<Void> reservations = reservationService.editReservations(reservation.getId(), reservation);
         reservations.enqueue(callback);
     }
 
-    public void getListByDateCustomer(int id, DateTime date,Callback<List<Reservation>> callback) throws Exception{
-        String state = SessionUtils.getString(mContext, CodeDefinition.USER_STATE,CodeDefinition.CUSTOMER);
-        if(state.equals(CodeDefinition.CUSTOMER)) {
-            initCustomerService();
-            Call<List<Reservation>> reservations = customerService.getListByDate(id,date.toString("yyyy-MM-dd"));
-            reservations.enqueue(callback);
-        }else {
+    public void getListByDateReservation(int id, DateTime date, Callback<List<Reservation>> callback) throws Exception{
+        String state = SessionUtils.getString(mContext, CodeDefinition.USER_STATE, CodeDefinition.CUSTOMER);
+//        if(state.equals(CodeDefinition.CUSTOMER)) {
+//            initCustomerService();
+//            Call<List<Reservation>> reservations = customerService.getListByDate(id,date.toString("yyyy-MM-dd"));
+//            reservations.enqueue(callback);
+//        }else {
             initTrainerService();
             Call<List<Reservation>> reservations = trainerService.getListByDate(id,date.toString("yyyy-MM-dd"));
             reservations.enqueue(callback);
-        }
+//        }
     }
 
+    public void getCustomer(int id,Callback<Customer> callback) throws Exception{
+        initCustomerService();
+        Call<Customer> customers = customerService.getCustomer(id);
+        customers.enqueue(callback);
+    }
     public void getCustomers(int trainerId,Callback<List<Customer>> callback) throws Exception{
         initCustomerService();
-        Call<List<Customer>> customers = customerService.getCustomer(trainerId);
+        Call<List<Customer>> customers = customerService.getCustomers(trainerId);
         customers.enqueue(callback);
     }
 
