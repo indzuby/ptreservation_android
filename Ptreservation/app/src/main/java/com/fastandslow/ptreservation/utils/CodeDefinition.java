@@ -16,4 +16,5 @@ public class CodeDefinition {
     final public static String USER_STATE = "USER_STATE";
     final public static String TRAINER = "TRAINER";
     final public static String CUSTOMER = "CUSTOMER";
+    final public static String USER_ID = "USER_ID";
 }

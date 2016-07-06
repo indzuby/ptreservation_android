@@ -22,5 +22,19 @@ public class User extends Common {
     @SerializedName("sex")
     @Expose
     int sex;
+    @SerializedName("trainer_id")
+    @Expose
+    int trainerId;
 
+    @SerializedName("profile_url")
+    @Expose
+    String profileUrl;
+
+
+    @SerializedName("password")
+    String password;
+
+    @SerializedName("user_id")
+    @Expose
+    int userId;
 }

@@ -16,7 +16,7 @@ import com.fastandslow.ptreservation.domain.TodaySchedule;
  * Created by zuby on 2016. 7. 1..
  */
 public class SideMenuAdapter extends BaseAdapter {
-    String[] menu ={"프로필","문의하기","로그아웃"};
+    String[] menu ={"프로필","앱 문의하기","로그아웃"};
     int[] icon ={R.drawable.oval,R.drawable.oval,R.drawable.oval};
     Context mContext;
 

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fastandslow.ptreservation.R;
+import com.fastandslow.ptreservation.domain.Customer;
 import com.fastandslow.ptreservation.domain.User;
 import com.fastandslow.ptreservation.network.RestApi;
 import com.fastandslow.ptreservation.utils.CodeDefinition;
@@ -59,8 +60,10 @@ public class LoginActivity extends BaseActivity {
                                 } else {
                                     SessionUtils.putString(getBaseContext(), CodeDefinition.USER_STATE, CodeDefinition.CUSTOMER);
                                     SessionUtils.putInt(getBaseContext(), CodeDefinition.CUSTOMER_ID, response.body().getId());
+                                    SessionUtils.putInt(getBaseContext(), CodeDefinition.TRAINER_ID, response.body().getTrainerId());
                                     Toast.makeText(getBaseContext(), response.body().getName() + "님 \n회원으로 로그인했습니다.", Toast.LENGTH_SHORT).show();
                                 }
+                                SessionUtils.putInt(getBaseContext(), CodeDefinition.USER_ID, response.body().getUserId());
                                 startMainActivity();
                             } else {
                                 Toast.makeText(getBaseContext(), "로그인 실패", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:gravity="center_vertical"
+        android:layout_height="56dp"
+        android:id="@+id/element_customer_item"
+        android:layout_width="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:id="@+id/customer_image"
+            android:layout_marginLeft="8dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_toRightOf="@+id/customer_image"
+            android:gravity="center_vertical"
+            android:id="@+id/customer_info"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:paddingLeft="8dp"
+            android:text="김주현 회원님(10회)"
+            android:textColor="@color/black"
+            android:layout_toLeftOf="@+id/customer_tel"
+            android:textSize="16sp" />
+
+
+            <TextView
+                android:background="@color/translate"
+                android:id="@+id/customer_tel"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:layout_width="wrap_content"
+                android:text="010-4798-7525"
+                android:textColor="@color/green"
+                android:textSize="16sp" />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.fastandslow.ptreservation.view.customer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -286,6 +287,8 @@ public class CustomerNewScheduleActivity extends BaseActivity {
                 break;
             case R.id.name_view:
                 // telephone
+                Intent intent2 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mCustomer.getTrainer().getUser().getTel()));
+                startActivity(intent2);
                 break;
             case R.id.date:
                 DatePickerDialog dpd = DatePickerDialog.newInstance(dateSetListener,

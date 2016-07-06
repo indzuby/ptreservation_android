@@ -27,6 +27,7 @@ dependencies {
     compile 'com.android.support:design:23.2.0'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.tsengvn:Typekit:1.0.0'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'joda-time:joda-time:2.9.1'
     compile 'com.google.code.gson:gson:2.6.2'
     provided 'org.projectlombok:lombok:1.12.6'

@@ -13,6 +13,9 @@ public class StateUtils {
         else
             return SessionUtils.getInt(context,CodeDefinition.CUSTOMER_ID,0);
     }
+    public static int getTrainerId(Context context) {
+            return SessionUtils.getInt(context,CodeDefinition.TRAINER_ID,0);
+    }
     public static boolean isTrainer(Context context){
         String  state = SessionUtils.getString(context,CodeDefinition.USER_STATE,CodeDefinition.TRAINER);
         return state.equals(CodeDefinition.TRAINER);

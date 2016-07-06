@@ -9,6 +9,7 @@ import com.fastandslow.ptreservation.service.CustomerService;
 import com.fastandslow.ptreservation.service.LoginService;
 import com.fastandslow.ptreservation.service.ReservationService;
 import com.fastandslow.ptreservation.service.TrainerService;
+import com.fastandslow.ptreservation.service.UserService;
 import com.fastandslow.ptreservation.utils.CodeDefinition;
 import com.fastandslow.ptreservation.utils.SessionUtils;
 
@@ -30,7 +31,8 @@ public class RestApi {
 
 
 //    final static String url = "http://localhost:8000/";
-    final static String url = "http://192.168.0.13:3000/";
+    public final static String url = "http://192.168.0.30:3000/";
+    public final static String imageUrl = "http://192.168.0.30:3000/";
 
     Context mContext;
     private static RestApi instance ;
@@ -44,6 +46,8 @@ public class RestApi {
     TrainerService trainerService;
 
     CustomerService customerService;
+
+    UserService userService;
 
     public RestApi(Context mContext) {
         this.mContext = mContext;
@@ -82,6 +86,12 @@ public class RestApi {
         if(customerService==null)
             customerService = retrofit.create(CustomerService.class);
     }
+    private void initUserService(){
+        if(userService==null)
+            userService = retrofit.create(UserService.class);
+    }
+
+
 
     public void login(String email, String password,Callback<User> callback) throws Exception{
         initLoginService();
@@ -131,4 +141,20 @@ public class RestApi {
         reservations.enqueue(callback);
     }
 
+    public void updateUser(User user,Callback<Void> callback){
+        initUserService();
+        Call<Void> updates = userService.update(user);
+        updates.enqueue(callback);
+    }
+    public void updateUserWithPassword(User user,Callback<Void> callback){
+        initUserService();
+        Call<Void> updates = userService.updateWithPassword(user);
+        updates.enqueue(callback);
+    }
+
+    public void getUser(int id,Callback<User> callback) throws Exception{
+        initUserService();
+        Call<User> customers = userService.getUser(id);
+        customers.enqueue(callback);
+    }
 }

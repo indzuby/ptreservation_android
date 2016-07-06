@@ -1,6 +1,7 @@
 package com.fastandslow.ptreservation.view.common;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -21,6 +22,7 @@ import com.fastandslow.ptreservation.utils.StateUtils;
 import com.fastandslow.ptreservation.view.adapter.SchedulePagerAdapter;
 import com.fastandslow.ptreservation.view.adapter.SideMenuAdapter;
 import com.fastandslow.ptreservation.view.customer.CustomerNewScheduleActivity;
+import com.fastandslow.ptreservation.view.customer.CustomerProfileActivity;
 import com.fastandslow.ptreservation.view.trainer.TrainerNewScheduleActivity;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -124,11 +126,31 @@ public class MainActivity extends BaseActivity {
         mSideMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 2) {
+                if(position ==0 ){
+                    Intent intent;
+                    if(isTrainer)
+                        intent = new Intent(MainActivity.this, ProfileEditActivity.class);
+                    else
+                        intent = new Intent(MainActivity.this,CustomerProfileActivity.class);
+                    startActivity(intent);
+                }else if(position==1) {
+                    String version = "0.0";
+                    try {
+                        PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                        version = pInfo.versionName;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Intent it = new Intent(Intent.ACTION_SEND);
+                    it.setType("plaine/text");
+                    it.putExtra(Intent.EXTRA_EMAIL, new String[]{"indzuby@naver.com"});
+                    it.putExtra(Intent.EXTRA_TEXT, "Version : " + version);
+                    startActivity(Intent.createChooser(it, "Choose Email Client"));
+                }
+                else if(position == 2) {
                     Toast.makeText(getBaseContext(),"로그아웃 하였습니다.",Toast.LENGTH_SHORT).show();
                     SessionUtils.putBoolean(getBaseContext(), CodeDefinition.AUTO_LOGIN, false);
                     SessionUtils.putString(getBaseContext(), CodeDefinition.EMAIL, "");
-                    SessionUtils.putString(getBaseContext(), CodeDefinition.PASSWORD, "");
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();

@@ -21,4 +21,6 @@ public class Customer extends Common{
     @Expose
     Trainer trainer;
 
+
+
 }

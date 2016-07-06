@@ -48,6 +48,7 @@ public class ScheduleFragment extends BaseFragment {
     Map<String, Integer> mReservationMap;
     Map<String, Integer> mTrainerReservationMap;
     int mId;
+    int mTrainerId;
     boolean isTrainer;
 
     @Override
@@ -72,6 +73,7 @@ public class ScheduleFragment extends BaseFragment {
         mView = inflater.inflate(R.layout.element_schedule_body, container, false);
 
         mId = StateUtils.getUserId(getContext());
+        mTrainerId = StateUtils.getTrainerId(getContext());
         isTrainer = StateUtils.isTrainer(getContext());
         init();
         return mView;
@@ -115,7 +117,7 @@ public class ScheduleFragment extends BaseFragment {
 
     public void getReservation() {
         try {
-            RestApi.getInstance(getContext()).getListByDateReservation(mId, mDateTime, new Callback<List<Reservation>>() {
+            RestApi.getInstance(getContext()).getListByDateReservation(mTrainerId, mDateTime, new Callback<List<Reservation>>() {
                 @Override
                 public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
                     Log.e("Success", "!!!");
