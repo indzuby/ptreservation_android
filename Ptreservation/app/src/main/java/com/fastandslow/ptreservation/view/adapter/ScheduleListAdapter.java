@@ -120,14 +120,14 @@ public class ScheduleListAdapter extends BaseAdapter implements View.OnClickList
                 timeIndicator.setLayoutParams(params);
             }
         if (mReservationMap.containsKey(beforeTime.toString("HH:mm"))) {
-            firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_translate));
+            firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.blue_transparent));
             firstTextView.setText(" * 예약");
         }else if(mTrainerReservationMap.containsKey(beforeTime.toString("HH:mm"))) {
             firstTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red_translate));
             firstTextView.setText(" * 다른 회원 예약");
         }
         if (mReservationMap.containsKey(time.toString("HH:mm"))) {
-            secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_translate));
+            secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.blue_transparent));
             secondTextView.setText(" * 예약");
         }else if(mTrainerReservationMap.containsKey(time.toString("HH:mm"))) {
             secondTextView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red_translate));

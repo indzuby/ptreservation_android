@@ -101,8 +101,8 @@ public class ScheduleFragment extends BaseFragment {
         mList = (ListView) mView.findViewById(R.id.today_schedule);
 
         if (DateUtils.isSameDate(mDateTime, new DateTime())) {
-            dayOfMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
-            dayOfWeek.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+            dayOfMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
+            dayOfWeek.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
         } else {
             dayOfMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.dark_gray));
             dayOfWeek.setTextColor(ContextCompat.getColor(getContext(), R.color.dark_gray));

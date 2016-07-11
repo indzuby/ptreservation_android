@@ -275,6 +275,13 @@ public class CustomerNewScheduleActivity extends BaseActivity {
                 }
                 reservation.setEndDatetime(endDatetime.toDate());
             }
+            if((endDatetime.getMinuteOfDay() - startDatetime.getMinuteOfDay())>60) {
+                Toast.makeText(getBaseContext(), "1시간 이상 예약이 불가능합니다.", Toast.LENGTH_SHORT).show();
+                endDatetime = startDatetime.plusMinutes(30);
+                endTime.setText(endDatetime.toString("a hh:mm"));
+                reservation.setStartDatetime(startDatetime.toDate());
+                reservation.setEndDatetime(endDatetime.toDate());
+            }
         }
     };
 

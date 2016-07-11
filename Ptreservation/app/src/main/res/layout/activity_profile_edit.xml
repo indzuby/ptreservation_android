@@ -71,7 +71,7 @@
                     android:background="@color/translate"
                     android:gravity="center_vertical|right"
                     android:text="김주현"
-                    android:textColor="@color/green"
+                    android:textColor="@color/blue"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -111,7 +111,7 @@
                     android:background="@color/translate"
                     android:gravity="center_vertical|right"
                     android:text="010-4798-7525"
-                    android:textColor="@color/green"
+                    android:textColor="@color/blue"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -164,9 +164,9 @@
                     android:background="@color/translate"
                     android:gravity="center_vertical|right"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/green_translate"
+                    android:textColorHint="@color/blue_transparent"
                     android:hint="비밀번호"
-                    android:textColor="@color/green"
+                    android:textColor="@color/blue"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -206,9 +206,9 @@
                     android:background="@color/translate"
                     android:gravity="center_vertical|right"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/green_translate"
+                    android:textColorHint="@color/blue_transparent"
                     android:hint="비밀번호 확인"
-                    android:textColor="@color/green"
+                    android:textColor="@color/blue"
                     android:textSize="16sp" />
 
             </RelativeLayout>

@@ -174,7 +174,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-
                 if (currentItem != -1) {
                     if (position < currentItem) {
                         mDateList.add(0, DateUtils.getBeforeDate(mDateList.get(0)));

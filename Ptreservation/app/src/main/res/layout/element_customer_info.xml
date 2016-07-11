@@ -35,7 +35,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_width="wrap_content"
                 android:text="010-4798-7525"
-                android:textColor="@color/green"
+                android:textColor="@color/blue"
                 android:textSize="16sp" />
 
     </RelativeLayout>

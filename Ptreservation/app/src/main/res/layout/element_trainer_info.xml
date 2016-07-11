@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/green"
+                android:textColor="@color/blue"
                 android:textSize="16sp" />
 
         </RelativeLayout>
@@ -83,7 +83,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/green"
+                android:textColor="@color/blue"
                 android:textSize="16sp" />
 
         </RelativeLayout>
