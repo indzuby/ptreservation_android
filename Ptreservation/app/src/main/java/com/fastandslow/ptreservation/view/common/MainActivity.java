@@ -174,16 +174,15 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (currentItem != -1) {
-                    if (position < currentItem) {
-                        mDateList.add(0, DateUtils.getBeforeDate(mDateList.get(0)));
-                        mDateList.remove(mDateList.size() - 1);
-                    } else {
-                        mDateList.add(DateUtils.getAfterDate(mDateList.get(mDateList.size() - 1)));
-                        mDateList.remove(0);
+                if (currentItem != -1 && (position<1 || position>mDateList.size()-2)) {
+                    if (position == 0) {
+                        mDateList = DateUtils.getTenDateList(mDateList.get(0));
+                    } else if(position == mDateList.size()-1){
+                        mDateList = DateUtils.getTenDateList(mDateList.get(mDateList.size()-1));
                     }
+                    pagerAdapter = new SchedulePagerAdapter(getSupportFragmentManager(), mDateList,isTrainer);
                     currentItem = -1;
-                    pagerAdapter.notifyDataSetChanged();
+                    mSchedulePager.setAdapter(pagerAdapter);
                     mSchedulePager.setCurrentItem(5);
                 } else {
                     DateTime curr = mDateList.get(position);
