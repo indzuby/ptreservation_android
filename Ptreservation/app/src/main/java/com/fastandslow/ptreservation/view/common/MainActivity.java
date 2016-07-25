@@ -151,6 +151,7 @@ public class MainActivity extends BaseActivity {
                     Toast.makeText(getBaseContext(),"로그아웃 하였습니다.",Toast.LENGTH_SHORT).show();
                     SessionUtils.putBoolean(getBaseContext(), CodeDefinition.AUTO_LOGIN, false);
                     SessionUtils.putString(getBaseContext(), CodeDefinition.EMAIL, "");
+                    SessionUtils.putString(getBaseContext(), CodeDefinition.PASSWORD, "");
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();

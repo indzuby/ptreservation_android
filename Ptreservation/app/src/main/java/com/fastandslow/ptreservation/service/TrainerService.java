@@ -15,7 +15,7 @@ import retrofit2.http.Path;
  */
 public interface TrainerService {
 
-    @GET("trainers.json")
+    @GET("trainers/list")
     Call<List<Trainer>> getTrainerList();
 
     @GET("reservations/trainer/{id}/date/{date}")

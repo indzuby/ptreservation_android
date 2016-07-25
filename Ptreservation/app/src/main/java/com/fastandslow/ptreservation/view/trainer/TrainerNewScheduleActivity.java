@@ -53,7 +53,7 @@ public class TrainerNewScheduleActivity extends BaseActivity {
 
     DateTime startDatetime, endDatetime;
     int mId;
-    int customerIndex;
+    int customerIndex=-1;
 
     int mYear, mMonth, mDay;
     boolean isStartTime;
@@ -189,7 +189,7 @@ public class TrainerNewScheduleActivity extends BaseActivity {
                             list.add(c.getUser().getName() + ", " + c.getUser().getTel()+", " + c.getPtCount());
                         }
                         customerNameList = list.toArray(new String[list.size()]);
-                        customerView.setText(customerNameList[0]);
+                        customerView.setText("회원을 선택해주세요.");
                         if (isEdit)
                             initData();
                     }
@@ -344,6 +344,10 @@ public class TrainerNewScheduleActivity extends BaseActivity {
 
                 break;
             case R.id.save:
+                if(customerIndex == -1){
+                    Toast.makeText(this,"회원을 선택해주세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 reservation.setMemo(memoView.getText().toString());
                 reservation.setCustomerId(customerList.get(customerIndex).getId());
                 reservation.setTrainerId(mId);

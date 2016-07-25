@@ -31,7 +31,7 @@ public class RestApi {
 
 
 //    final static String url = "http://localhost:8000/";
-    public final static String url = "http://192.168.0.8:3000/";
+    public final static String url = "http://115.68.74.234:3000//";
     public final static String imageUrl = "http://192.168.0.8:3000/";
 
     Context mContext;
